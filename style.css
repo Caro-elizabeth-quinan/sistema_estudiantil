@@ -221,3 +221,38 @@ input:focus {
     background-color: var(--badge-danger-bg);
     color: var(--badge-danger-text);
 }
+/* Borde rojo en la casilla con error */
+input.input-error {
+    border: 1px solid #c40000 !important;
+    box-shadow: 0 0 0 3px rgba(196, 0, 0, 0.15);
+}
+
+/* Mensaje de error abajo con icono ! de Amazon */
+.mensaje-error {
+    display: none;
+    color: #c40000;
+    font-size: 0.82rem;
+    font-weight: 700;
+    margin-top: 4px;
+}
+
+/* Muestra el mensaje solo cuando contiene texto */
+.mensaje-error:not(:empty) {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Crea el icono de signo de exclamación al inicio del texto */
+.mensaje-error:not(:empty)::before {
+    content: "!";
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+    font-style: italic;
+    font-weight: 900;
+    font-size: 0.75rem;
+    color: #c40000;
+}

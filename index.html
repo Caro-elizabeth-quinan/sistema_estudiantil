@@ -32,17 +32,20 @@
                 <form id="formEstudiante" onsubmit="event.preventDefault(); agregarEstudiante();" class="form-grid">
                     <div class="form-group">
                         <label for="nombre">Nombre</label>
-                        <input type="text" id="nombre" placeholder="Enzo" required>
+                        <input type="text" id="nombre" placeholder="Enzo">
+                        <small id="errorNombre" class="mensaje-error"></small>
                     </div>
 
                     <div class="form-group">
                         <label for="apellido">Apellido</label>
-                        <input type="text" id="apellido" placeholder="Martínez" required>
+                        <input type="text" id="apellido" placeholder="Martínez">
+                        <small id="errorApellido" class="mensaje-error"></small>
                     </div>
 
                     <div class="form-group">
                         <label for="promedio">Promedio Final</label>
-                        <input type="number" id="promedio" min="1.0" max="7.0" step="0.1" placeholder="6.5" required>
+                        <input type="number" id="promedio" min="1.0" max="7.0" step="0.1" placeholder="6.5">
+                        <small id="errorPromedio" class="mensaje-error"></small>
                     </div>
 
                     <button type="submit" class="btn btn-primary">
