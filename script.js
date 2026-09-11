@@ -1,91 +1,93 @@
 function agregarEstudiante() {
-    const nombreInput = document.getElementById("nombre");
-    const apellidoInput = document.getElementById("apellido");
-    const promedioInput = document.getElementById("promedio");
+    // 1. Obtener elementos del DOM
+    const inputNombre = document.getElementById("nombre");
+    const inputApellido = document.getElementById("apellido");
+    const inputNota1 = document.getElementById("nota1");
+    const inputNota2 = document.getElementById("nota2");
+    const inputNota3 = document.getElementById("nota3");
 
     const errorNombre = document.getElementById("errorNombre");
     const errorApellido = document.getElementById("errorApellido");
-    const errorPromedio = document.getElementById("errorPromedio");
+    const errorNota1 = document.getElementById("errorNota1");
+    const errorNota2 = document.getElementById("errorNota2");
+    const errorNota3 = document.getElementById("errorNota3");
 
-    // Limpiar errores previos y quitar borde rojo de los inputs
-    errorNombre.textContent = "";
-    errorApellido.textContent = "";
-    errorPromedio.textContent = "";
-    
-    nombreInput.classList.remove("input-error");
-    apellidoInput.classList.remove("input-error");
-    promedioInput.classList.remove("input-error");
+    // 2. Limpiar mensajes de error y clases de error previas
+    const inputs = [inputNombre, inputApellido, inputNota1, inputNota2, inputNota3];
+    const errores = [errorNombre, errorApellido, errorNota1, errorNota2, errorNota3];
 
-    const nombre = nombreInput.value.trim();
-    const apellido = apellidoInput.value.trim();
-    const promedio = parseFloat(promedioInput.value);
+    errores.forEach(error => error.textContent = "");
+    inputs.forEach(input => input.classList.remove("input-error"));
+
+    // 3. Obtener valores procesados
+    const nombre = inputNombre.value.trim();
+    const apellido = inputApellido.value.trim();
+    const nota1Val = inputNota1.value;
+    const nota2Val = inputNota2.value;
+    const nota3Val = inputNota3.value;
+
+    const nota1 = parseFloat(nota1Val);
+    const nota2 = parseFloat(nota2Val);
+    const nota3 = parseFloat(nota3Val);
 
     let esValido = true;
 
-    // Validar nombre
+    // 4. Validaciones individuales
     if (nombre === "") {
-        errorNombre.textContent = "Es obligatorio Introudcir el nombre, por favor registralo";
-        nombreInput.classList.add("input-error");
+        errorNombre.textContent = "Introduce tu nombre";
+        inputNombre.classList.add("input-error");
         esValido = false;
     }
 
-    // Validar apellido
     if (apellido === "") {
-        errorApellido.textContent = "Es obligatorio Introudcir el apellido, por favor registralo";
-        apellidoInput.classList.add("input-error");
+        errorApellido.textContent = "Introduce tu apellido";
+        inputApellido.classList.add("input-error");
         esValido = false;
     }
 
-    // Validar promedio
-    if (isNaN(promedio) || promedio < 1.0 || promedio > 7.0) {
-        errorPromedio.textContent = "Introduce un promedio válido entre 1.0 y 7.0";
-        promedioInput.classList.add("input-error");
+    if (nota1Val === "" || isNaN(nota1) || nota1 < 1.0 || nota1 > 7.0) {
+        errorNota1.textContent = "Introduce una nota entre 1.0 y 7.0";
+        inputNota1.classList.add("input-error");
         esValido = false;
     }
 
-    // Si hay algún error, detener ejecución
+    if (nota2Val === "" || isNaN(nota2) || nota2 < 1.0 || nota2 > 7.0) {
+        errorNota2.textContent = "Introduce una nota entre 1.0 y 7.0";
+        inputNota2.classList.add("input-error");
+        esValido = false;
+    }
+
+    if (nota3Val === "" || isNaN(nota3) || nota3 < 1.0 || nota3 > 7.0) {
+        errorNota3.textContent = "Introduce una nota entre 1.0 y 7.0";
+        inputNota3.classList.add("input-error");
+        esValido = false;
+    }
+
+    // Detener la ejecución si el formulario no es válido
     if (!esValido) {
         return;
     }
 
-    // Determinar estado
+    // 5. Calcular promedio ponderado (30% + 40% + 30%)
+    const promedio = (nota1 * 0.30) + (nota2 * 0.40) + (nota3 * 0.30);
     const estado = promedio >= 4.0 ? "Aprobado" : "Reprobado";
 
-    // Obtener la tabla
+    // 6. Insertar fila en la tabla
     const tabla = document.getElementById("tablaEstudiantes");
-
-    // Crear fila y celdas
     const fila = document.createElement("tr");
 
-    const celdaNombre = document.createElement("td");
-    const celdaApellido = document.createElement("td");
-    const celdaPromedio = document.createElement("td");
-    const celdaEstado = document.createElement("td");
+    fila.innerHTML = `
+        <td>${nombre}</td>
+        <td>${apellido}</td>
+        <td>${nota1.toFixed(1)}</td>
+        <td>${nota2.toFixed(1)}</td>
+        <td>${nota3.toFixed(1)}</td>
+        <td class="${promedio < 4.0 ? 'promedio-reprobado' : ''}">${promedio.toFixed(1)}</td>
+        <td class="${estado === 'Aprobado' ? 'aprobado' : 'reprobado'}">${estado}</td>
+    `;
 
-    // Asignar valores
-    celdaNombre.textContent = nombre;
-    celdaApellido.textContent = apellido;
-    celdaPromedio.textContent = promedio.toFixed(1);
-    celdaEstado.textContent = estado;
-
-    // Aplicar clase de estado
-    celdaEstado.classList.add(
-        estado === "Aprobado" ? "aprobado" : "reprobado"
-    );
-
-    if (promedio < 4.0) {
-        celdaPromedio.classList.add("promedio-reprobado");
-    }
-
-    // Agregar celdas a la fila
-    fila.appendChild(celdaNombre);
-    fila.appendChild(celdaApellido);
-    fila.appendChild(celdaPromedio);
-    fila.appendChild(celdaEstado);
-
-    // Agregar fila a la tabla
     tabla.appendChild(fila);
 
-    // Limpiar formulario
+    // 7. Limpiar formulario tras el éxito
     document.getElementById("formEstudiante").reset();
 }
