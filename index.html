@@ -60,6 +60,13 @@
                         <small id="errorNota3" class="mensaje-error"></small>
                     </div>
 
+                    <!-- Nuevo campo para Asistencia (%) -->
+                    <div class="form-group">
+                        <label for="asistencia">Asistencia (%)</label>
+                        <input type="number" id="asistencia" min="0" max="100" step="1" placeholder="85">
+                        <small id="errorAsistencia" class="mensaje-error"></small>
+                    </div>
+
                     <button type="submit" class="btn btn-primary">
                         Agregar estudiante
                     </button>
@@ -82,6 +89,7 @@
                                 <th>Nota 2</th>
                                 <th>Nota 3</th>
                                 <th>Promedio</th>
+                                <th>Asistencia</th>
                                 <th>Estado</th>
                             </tr>
                         </thead>
